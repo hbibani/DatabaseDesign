@@ -1,0 +1,78 @@
+drop table booking, guest, room, hotel;
+
+/* textbook page 166 (edition 6) or 158 (edition 5) */
+
+create table Hotel (
+hotelNo numeric(10),
+hotelName varchar(20),
+city varchar(8),
+constraint hotel_PK PRIMARY KEY(hotelNo)
+);
+
+CREATE TABLE Room (
+roomNo numeric(10),
+hotelNo numeric(10),
+type  varchar(20),
+price money,
+CONSTRAINT room_pk PRIMARY KEY(roomNo, hotelNo),
+CONSTRAINT hotel_fk FOREIGN KEY(hotelNo) REFERENCES Hotel
+);
+
+CREATE TABLE Guest (
+guestNo numeric(10),
+guestName varchar(20),
+guestAddress varchar(30),
+CONSTRAINT guest_pk PRIMARY KEY(guestNo)
+);
+
+CREATE TABLE Booking (
+hotelNo numeric(10),
+guestNo numeric(10),
+dateFrom datetime,
+dateTo datetime,
+roomNo numeric(10),
+CONSTRAINT booking_pk PRIMARY KEY(hotelNo, guestNo, dateFrom),
+CONSTRAINT room_fk FOREIGN KEY(roomNo, hotelNo) REFERENCES Room,
+CONSTRAINT guest_fk FOREIGN KEY(guestNo) REFERENCES guest
+);
+
+
+/* fill table hotel */
+
+insert into hotel values (5431, 'Ritz',  'London');
+insert into hotel values (5551, 'Marriott', 'London');
+insert into hotel values (3451, 'Marriott', 'Paris');
+insert into hotel values (1122, 'Riverside', 'Berlin');
+insert into hotel values (1342, 'Imperial', 'London');
+insert into hotel values (7782, 'Triumph', 'Paris');
+
+/* fill table room */
+
+insert into room values (910, 5551, 'Double', 255);
+insert into room values (915, 5551, 'Family', 345);
+insert into room values (448, 7782, 'Double', 156);
+insert into room values (110, 1122, 'Double', 39);
+insert into room values (910, 1342, 'Single', 27);
+insert into room values (448, 1122, 'Suite', 115);
+
+/* fill table guest */
+
+insert into guest values (9878987, 'Jackson', 'Sydney, Australia');
+insert into guest values (4445555, 'Lewis', 'London, England');
+insert into guest values (7777777, 'Luu', 'Auckland, New Zealand');
+insert into guest values (3434343, 'Hamy', 'London, England');
+insert into guest values (1000001, 'Jerry', 'London, England');
+insert into guest values (9998888, 'Tony', 'London, England');
+
+/* fill table booking */
+/* can one fill this table before filling table guest? */
+
+insert into booking values (1122, 9878987, '23-Feb-05', '28-Feb-05', 110);
+insert into booking values (1122, 7777777, '2-Mar-2005', '10/Mar/05', 110);
+insert into booking values (1342, 9878987, '3-Mar-05', null , 910);
+
+/* insert and delete a record */
+insert into booking values (5551, 3434343, '3-2-05', '03-25-2005', 915);
+delete from booking where hotelNo = 5551 and guestNo = 3434343;
+
+insert into booking values (5551, 3434343, '2-Mar-05', '10-March-2005', 915);

@@ -1,0 +1,10 @@
+Option 1:
+SELECT buyerID, firstName, lastName
+FROM Buyers
+inner join Employee ON Buyers.employeeID=Employee.employeeID
+WHERE LastName like 'Bibani';
+
+Option 2:
+SELECT Buyers.buyerID, Employee.firstName, Employee.lastName
+FROM Buyers, Employee
+WHERE buyers.employeeID = Employee.employeeID AND LastName like 'Bibani'

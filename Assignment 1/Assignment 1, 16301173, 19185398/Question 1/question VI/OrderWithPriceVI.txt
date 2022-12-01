@@ -1,0 +1,28 @@
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 1
+
+-- We can see here that two people ordered the same thing from two suppliers who have the product in stock[ and at different prices]
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 5
+--price for dongs = 33.31 [5]
+--price for dongs = 30.31 [6]
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 6

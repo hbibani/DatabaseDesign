@@ -1,0 +1,376 @@
+Q1[i]:
+
+
+
+create table Shop 
+(
+	shopID	  		Int,
+	Address 		varchar(50),
+	Email	  		varchar(50),
+	PhoneNumber		varchar(50)
+    CONSTRAINT Shop_PK PRIMARY KEY(shopID)
+)
+
+create table Employee
+(
+	employeeID		int,
+	shopID			int,
+	firstName		varchar(50),
+	lastName		varchar(50),
+	phoneNumber		varchar(50),
+	email			varchar(50),
+	addressOF		varchar(50),
+	dateOfBirth		date
+	CONSTRAINT Employee_pk PRIMARY KEY(employeeID)
+	CONSTRAINT Shop_fk FOREIGN KEY(shopID) REFERENCES Shop
+)
+
+create table Buyers
+(
+	buyerID		int,
+	employeeID		int,
+	CONSTRAINT Buyers_pk PRIMARY KEY(buyerID),
+    	CONSTRAINT Employee_fk FOREIGN KEY(employeeID) REFERENCES Shop
+
+)
+
+create table Orders
+(
+	orderID		int,
+	buyerID		int
+	dateOf			date,
+	CONSTRAINT Orders_pk PRIMARY KEY(orderID),
+    	CONSTRAINT Buyers_fk FOREIGN KEY(buyerID) REFERENCES Shop
+)
+
+
+create table OrderDetail
+(
+	orderID		int,
+	merProductID		int,
+	quantity		int,
+	CONSTRAINT OrderDetail_pk PRIMARY KEY(orderID, merProductID),
+    	CONSTRAINT Orders_fk FOREIGN KEY(orderID) REFERENCES Orders,
+	CONSTRAINT MerchantProducts_fk FOREIGN KEY(merProductID) REFERENCES MerchantProducts
+)
+
+
+
+
+
+create table Products
+(
+	productID			int,
+	description			varchar(50),
+	CONSTRAINT Products_pk PRIMARY KEY(productID)
+)
+
+
+create table Merchants
+(
+	merchantID			int,
+	merchantName			varchar(50),
+	address			varchar(50),
+	email				varchar(50),
+	phone				varchar(50),
+	CONSTRAINT Merchants_pk PRIMARY KEY(merchantID)
+)
+
+
+create table MerchantProducts
+(
+	merProductID			int,
+	merchantID			int,
+	productID			int,
+	price				money
+	CONSTRAINT MerchantProducts_pk PRIMARY KEY(merProductID),
+   	CONSTRAINT Merchants_fk FOREIGN KEY(merchantID) REFERENCES Merchants,
+	CONSTRAINT Products_fk FOREIGN KEY(productID) REFERENCES Products
+)
+
+
+
+Q1[IV]:
+
+insert into Shop(shopID, Address, Email, PhoneNumber) values (1, '5 raket St, Fairfield', 'shop1@yahoo.com', '98283888');
+insert into Shop(shopID, Address, Email, PhoneNumber) values (2, '6 Daket St, Bonnyrigg', 'shop2@yahoo.com', '98222833');
+insert into Shop(shopID, Address, Email, PhoneNumber) values (3, '7 Kropot St, Bergandy', 'shop3@yahoo.com', '99542843');
+
+
+insert into Employee(employeeID, shopID, firstName, lastName, email, addressOF, dateOfBirth, phoneNumber ) values (1, 1, 'Heja', 'Bibani', 'hejabibani@mail.com', '5 Swinborne Cres, Wetherill Park', '01/08/1988', '0415105354');
+insert into Employee(employeeID, shopID, firstName, lastName, email, addressOF, dateOfBirth, phoneNumber ) values (2, 2,'Hema', 'Bibani', 'hemabibani@mail.com', '5 Swinborne Cres, Wetherill Park',' 01/02/1987', '0450047636');
+insert into Employee(employeeID, shopID, firstName, lastName, email, addressOF, dateOfBirth, phoneNumber ) values (3, 3, 'Mathew', 'Biggot', 'mb@mail.com', '12 Mountain Street, Codone Park', '03/05/1966', '04556464636');
+
+insert into Buyers (buyerID, employeeID) values (1, 1);
+insert into Buyers (buyerID, employeeID) values (2, 2);
+insert into Buyers (buyerID, employeeID) values (3, 3);
+
+
+insert into Orders (orderID, buyerID, dateOf) values (1, 2, '01/08/2019');
+insert into Orders (orderID, buyerID, dateOf) values (2, 3, '02/08/2019');
+insert into Orders (orderID, buyerID, dateOf) values (3, 1, '02/08/2019');
+insert into Orders (orderID, buyerID, dateOf) values (4, 1, '03/08/2019');
+insert into Orders (orderID, buyerID, dateOf) values (5, 1, '04/08/2019');
+insert into Orders (orderID, buyerID, dateOf) values (6, 2, '05/08/2019');
+
+insert into merchants(merchantID, merchantName, address, email, phone) values (1, 'JC merchandise', '2 two road, twentyville', 'jc@mail.com', '92773344');
+insert into merchants(merchantID, merchantName, address, email, phone) values (2, 'KK merchandise', '3 three road, Thirtyville', 'kk@mail.com', '92382945');
+insert into merchants(merchantID, merchantName, address, email, phone) values (3, 'RK merchandise', '4 four road, Fourtyville', 'RK@mail.com', '92483634');
+
+
+insert into MerchantProducts(merProductID, merchantID,  productID, price) values (1, 2, 1, 29.99);
+insert into MerchantProducts(merProductID, merchantID,  productID, price) values (2, 1, 2, 28.99);
+insert into MerchantProducts(merProductID, merchantID,  productID, price) values (3, 1, 3, 21.10);
+insert into MerchantProducts(merProductID, merchantID,  productID, price) values (4, 3, 4, 33.31);
+insert into MerchantProducts(merProductID, merchantID,  productID, price) values (5, 2, 4, 30.31);
+
+
+insert into Products (productID, description) values (1, 'Bats');
+insert into Products (productID, description) values (2, 'Balls');
+insert into Products (productID, description) values (3, 'Calls');
+insert into Products (productID, description) values (4, 'Dongs');
+insert into Products (productID, description) values (5, 'Mongs');
+
+
+insert into OrderDetail (orderID, merProductID, quantity) values (1, 2, 5);
+insert into OrderDetail (orderID, merProductID, quantity) values (1, 3, 3);
+insert into OrderDetail (orderID, merProductID, quantity) values (2, 1, 3);
+insert into OrderDetail (orderID, merProductID, quantity) values (2, 2, 2);
+insert into OrderDetail (orderID, merProductID, quantity) values (3, 3, 2);
+insert into OrderDetail (orderID, merProductID, quantity) values (3, 2, 1);
+insert into OrderDetail (orderID, merProductID, quantity) values (4, 3, 1);
+insert into OrderDetail (orderID, merProductID, quantity) values (5, 4, 1);
+insert into OrderDetail (orderID, merProductID, quantity) values (6, 5, 1);
+
+Q1[V]:
+
+Option 1:
+SELECT buyerID, firstName, lastName
+FROM Buyers
+inner join Employee ON Buyers.employeeID=Employee.employeeID
+WHERE LastName like 'Bibani';
+
+Option 2:
+SELECT Buyers.buyerID, Employee.firstName, Employee.lastName
+FROM Buyers, Employee
+WHERE buyers.employeeID = Employee.employeeID AND LastName like 'Bibani'
+
+Q1[VI]
+
+Option 1:
+
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 1
+
+-- We can see here that two people ordered the same thing from two suppliers who have the product in stock[ and at different prices]
+
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 5
+
+--price for dongs = 33.31 [5]
+--price for dongs = 30.31 [6]
+
+select orders.orderID, products.description,MerchantProducts.price
+from Orders
+inner Join OrderDetail on orders.orderID = orderdetail.orderID
+inner join Buyers on orders.buyerID = buyers.employeeID
+inner join Employee on buyers.employeeID = employee.employeeID
+inner join MerchantProducts on OrderDetail.merProductID = MerchantProducts.MerProductID
+inner join products on MerchantProducts.productID = Products.productID
+where orders.orderID = 6
+
+Option 2:
+
+SELECT orders.orderID, products.productID,Products.description, MerchantProducts.price
+FROM Orders, OrderDetail, MerchantProducts, Products
+WHERE orders.orderID = OrderDetail.orderID AND orderDetail.merProductID = MerchantProducts.merProductID AND MerchantProducts.productID = products.productID AND orders.orderID = 1
+
+SELECT orders.orderID, products.productID,Products.description, MerchantProducts.price
+FROM Orders, OrderDetail, MerchantProducts, Products
+WHERE orders.orderID = OrderDetail.orderID AND orderDetail.merProductID = MerchantProducts.merProductID AND MerchantProducts.productID = products.productID AND orders.orderID = 5
+
+SELECT orders.orderID, products.productID,Products.description, MerchantProducts.price
+FROM Orders, OrderDetail, MerchantProducts, Products
+WHERE orders.orderID = OrderDetail.orderID AND orderDetail.merProductID = MerchantProducts.merProductID AND MerchantProducts.productID = products.productID AND orders.orderID = 6
+
+Q1[VII]:
+
+select orders.orderID, orders.dateOf, orders.buyerID, employee.firstName, Employee.lastName
+from Orders, Buyers, Employee
+WHERE orders.buyerID = buyers.employeeID AND buyers.employeeID = employee.employeeID
+
+
+QUESTION 2:
+
+Q2[ii]
+UPDATE Staff SET fName = 'Marcus', lName = 'Belcastro', DOB = '1999-01-01'
+WHERE fName = 'Julie' AND lName = 'Lee';
+
+UPDATE Staff SET fName = 'Heja', lName = 'Bibani'
+WHERE staffNo = 'SL21';
+
+SELECT * FROM Staff;
+
+Q2[iii]:
+
+SELECT fName, lName, telNo, maxRent
+
+FROM Client;
+
+
+Q2[iv]:
+
+SELECT fName, lName, position, postcode
+FROM Staff, Branch
+WHERE Staff.branchNo = Branch.branchNo
+ORDER BY postcode, lName ASC;
+
+Q2[v]:
+
+SELECT propertyNo, postcode, fName, lName
+FROM PropertyForRent, Staff
+WHERE PropertyForRent.staffNo = Staff.staffNo
+ORDER BY postcode;
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------QUESTION 3:
+
+General Statements to produce databse:
+
+CREATE DATABASE IF NOT EXISTS swimming;
+USE swimming;
+
+
+CREATE TABLE IF NOT EXISTS Event (
+  eventId       INT UNSIGNED,
+  eventName     CHAR(50),
+
+  PRIMARY KEY (eventID)
+);
+
+
+CREATE TABLE IF NOT EXISTS Venue (
+  venueId       INT UNSIGNED,
+  name          CHAR(100),
+  location      CHAR(100),
+  phone         CHAR(13),
+  managerName   CHAR(50),
+
+  PRIMARY KEY (venueId)
+);
+
+
+CREATE TABLE IF NOT EXISTS Swimmer (
+  swimmerId     INT UNSIGNED,
+  name          CHAR(50),
+  birthDate     DATETIME,
+  gender        CHAR(1),
+  specialisation INT UNSIGNED,
+
+  PRIMARY KEY (swimmerId),
+  FOREIGN KEY (specialisation) REFERENCES Event (eventId)
+);
+
+
+CREATE TABLE IF NOT EXISTS Competition (
+  compId        INT UNSIGNED,
+  compName      CHAR(100),
+  _date         DATETIME,
+  venueId       INT UNSIGNED,
+
+  PRIMARY KEY (compId),
+  FOREIGN KEY (venueId) REFERENCES Venue (venueId)
+);
+
+
+CREATE TABLE IF NOT EXISTS Swim (
+  swimmerId     INT UNSIGNED,
+  compId        INT UNSIGNED,
+  eventId       INT UNSIGNED,
+  performanceTime   DOUBLE,
+  position      INT UNSIGNED,
+
+  PRIMARY KEY (swimmerId, compId, eventId),
+  FOREIGN KEY (swimmerId) REFERENCES Swimmer (swimmerId),
+  FOREIGN KEY (compId) REFERENCES Competition (compId),
+  FOREIGN KEY (eventId) REFERENCES Event (eventId)
+);
+
+
+INSERT INTO Venue VALUES (1, "That pool over there", "1st St Novaskotia", "1800333000", "Nancy");
+INSERT INTO Venue VALUES (2, "Parramatta olympic stadium", "21 Hansen St", "0404040040", "Mary");
+INSERT INTO Venue VALUES (3, "Blacktown community pools", "1 Main St", "691418300927", "Bruce");
+INSERT INTO Competition VALUES (1, "Competition of all time!", "1888-04-19", 1);
+INSERT INTO Competition VALUES (2, "Competition for someone else!", "1800-02-22", 2);
+INSERT INTO Competition VALUES (3, "Try and beat me!", "1930-09-28", 3);
+INSERT INTO Event VALUES (1, "100m Free");
+INSERT INTO Event VALUES (2, "250m Butter");
+INSERT INTO Event VALUES (3, "500m Breath");
+INSERT INTO Swimmer VALUES (1, "Georgene Shalash", "1857-10-08", "F", 3);
+INSERT INTO Swimmer VALUES (2, "Winford Shropshire", "1977-04-18", "F", 1);
+INSERT INTO Swimmer VALUES (3, "Percy Tillis", "1996-10-28", "F", 2);
+INSERT INTO Swimmer VALUES (4, "Demetrius Lovette", "1855-02-26", "F", 3);
+INSERT INTO Swimmer VALUES (5, "Ivey Hentz", "1804-06-05", "M", 1);
+INSERT INTO Swim VALUES (1, 1, 1, 89.995, 3);
+INSERT INTO Swim VALUES (2, 1, 1, 91.925, 2);
+INSERT INTO Swim VALUES (5, 1, 1, 94.598, 1);
+INSERT INTO Swim VALUES (5, 1, 3, 43.454, 4);
+INSERT INTO Swim VALUES (4, 1, 3, 73.111, 3);
+INSERT INTO Swim VALUES (1, 1, 3, 77.089, 2);
+INSERT INTO Swim VALUES (2, 1, 3, 79.332, 1);
+INSERT INTO Swim VALUES (5, 2, 1, 48.454, 4);
+INSERT INTO Swim VALUES (4, 2, 1, 63.155, 3);
+INSERT INTO Swim VALUES (1, 2, 1, 77.089, 2);
+INSERT INTO Swim VALUES (2, 2, 1, 79.332, 1);
+INSERT INTO Swim VALUES (1, 3, 1, 98.952, 2);
+INSERT INTO Swim VALUES (5, 3, 1, 98.951, 1);
+INSERT INTO Swim VALUES (5, 3, 2, 48.454, 5);
+INSERT INTO Swim VALUES (4, 3, 2, 36.420, 4);
+INSERT INTO Swim VALUES (1, 3, 2, 32.651, 3);
+INSERT INTO Swim VALUES (2, 3, 2, 27.729, 2);
+INSERT INTO Swim VALUES (3, 3, 2, 18.426, 1);
+
+
+
+Q3[iii]
+
+SELECT Swimmer.name, Swim.position, Competition.compName, Event.eventName
+FROM Swimmer, Swim, Competition, Event
+WHERE Swim.swimmerId = Swimmer.swimmerId AND
+      Swim.compId = Competition.compId AND
+      Swim.eventId = Event.eventId AND
+      Swim.position = 1;
+
+Q3[iv]
+
+SELECT Swimmer.name, Swim.position, Competition.compName, Event.eventName
+FROM Swimmer, Swim, Competition, Event
+WHERE Swim.swimmerId = Swimmer.swimmerId AND
+      Swim.compId = Competition.compId AND
+      Swim.eventId = Event.eventId AND
+      Swim.eventId = Swimmer.specialisation AND
+      Swim.position = 1;
+
+
+
+
+
